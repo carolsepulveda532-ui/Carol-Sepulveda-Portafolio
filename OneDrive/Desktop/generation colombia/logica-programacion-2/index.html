@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Conversor de Temperatura</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: #f0f0f0;
+      margin: 0;
+    }
+
+    .contenedor {
+      background: white;
+      padding: 32px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 400px;
+    }
+
+    h1 {
+      font-size: 22px;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    label {
+      font-size: 14px;
+      color: #555;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0 16px;
+      border: 1.5px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
+
+    input.error {
+      border-color: red;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #4af0c4;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #2ed4a8;
+    }
+
+    .error-msg {
+      color: red;
+      font-size: 13px;
+      margin-bottom: 12px;
+      display: none;
+    }
+
+    .resultados {
+      margin-top: 20px;
+      background: #f9f9f9;
+      border-radius: 8px;
+      padding: 16px;
+      display: none;
+    }
+
+    .resultados p {
+      margin: 6px 0;
+      font-size: 16px;
+      color: #333;
+    }
+
+    .resultados span {
+      font-weight: bold;
+      color: #0a8a63;
+    }
+  </style>
+</head>
+<body>
+
+<div class="contenedor">
+  <h1>Conversor de Temperatura</h1>
+
+  <label for="entrada">Temperatura en Celsius:</label>
+  <input type="text" id="entrada" placeholder="Ej: 45" />
+
+  <div class="error-msg" id="errorMsg">
+     Debes ingresar un número válido.
+  </div>
+
+  <button onclick="convertir()">Convertir</button>
+
+  <div class="resultados" id="resultados">
+    <p>Fahrenheit: <span id="fahrenheit"></span> °F</p>
+    <p> Kelvin: <span id="kelvin"></span> K</p>
+  </div>
+</div>
+
+<script>
+  function convertir() {
+    const input = document.getElementById('entrada');
+    const errorMsg = document.getElementById('errorMsg');
+    const resultados = document.getElementById('resultados');
+
+    const valor = input.value.trim();
+    const celsius = Number(valor);
+
+    if (valor === '' || isNaN(celsius)) {
+      input.classList.add('error');
+      errorMsg.style.display = 'block';
+      resultados.style.display = 'none';
+      return;
+    }
+
+
+    input.classList.remove('error');
+    errorMsg.style.display = 'none';
+
+  
+    const fahrenheit = (celsius * 9 / 5) + 32;
+    const kelvin = celsius + 273.15;
+
+
+    document.getElementById('fahrenheit').textContent = parseFloat(fahrenheit.toFixed(2));
+    document.getElementById('kelvin').textContent = parseFloat(kelvin.toFixed(2));
+    resultados.style.display = 'block';
+
+    console.log(`Entrada: ${celsius} °C`);
+    console.log(`Grados Fahrenheit: ${fahrenheit}`);
+    console.log(`Grados Kelvin: ${kelvin}`);
+  }
+
+
+  document.getElementById('entrada').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') convertir();
+  });
+</script>
+
+</body>
+</html>
